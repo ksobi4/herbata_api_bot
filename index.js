@@ -33,6 +33,10 @@ app.post('/do_things', (req, res) => {
     //---------------------
     var machineId = json.id
 
+    if(usedMachines.includes(machineId)) {
+      res.json({"answer":isCorrect, "do": "wait"})
+    }
+
     if(isCorrect) {
       res.json({"answer": "true", "correct": correct_ans});
       return
