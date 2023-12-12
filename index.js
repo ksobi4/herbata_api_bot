@@ -20,6 +20,7 @@ var usedMachines = []
 
 
 app.post('/do_things', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*")
     let jsonRaw = jsonConventer(req.body)
     let json = {
       token: jsonRaw["token"],
@@ -52,6 +53,7 @@ app.post('/do_things', (req, res) => {
 })
 
 app.post('/set_correct', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     let jsonRaw = jsonConventer(req.body)
     let json = {
       token: jsonRaw["token"],
@@ -73,6 +75,7 @@ app.post('/set_correct', (req, res) => {
 })
 
 app.post('/set_bad', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     let jsonRaw = jsonConventer(req.body)
     let json = {
       token: jsonRaw["token"],
