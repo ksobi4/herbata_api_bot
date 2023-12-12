@@ -34,7 +34,8 @@ app.post('/do_things', (req, res) => {
     var machineId = json.id
 
     if(usedMachines.includes(machineId)) {
-      res.json({"answer":isCorrect, "do": "wait"})
+      res.json({"answer":"false", "do": "wait"})
+      return
     }
 
     if(isCorrect) {
