@@ -29,24 +29,21 @@ app.post('/do_things', (req, res) => {
       res.sendStatus(401)
       return
     }
+    console.log('/do_things ' + JSON.stringify(json))
     //---------------------
     var machineId = json.id
 
-    if(usedMachines.includes(machineId)) {
-      res.json({"answer":"false", "do": "wait"})
+    if(isCorrect) {
+      res.json({"answer": "true", "correct": correct_ans});
       return
     }
 
-    if(isCorrect) {
-      res.json({"answer": "true", "correct": correct_ans});
+    if(machineId > 3) {
+      res.json({"answer":"false", "do": "wait"})
     } else {
-      if( parseInt(machineId)-1 == badAns.length) {
-        res.json({"answer":"false", "do": "try", "try_target": (badAns.length+1).toString()})
-      } else {
-        res.json({"answer":"false", "do": "wait"})
-      }
+      res.json({"answer":"false", "do": "try", "try_target": machineId.toString()})
     }
-    // print1()
+
 })
 
 app.post('/set_correct', (req, res) => {
@@ -60,6 +57,7 @@ app.post('/set_correct', (req, res) => {
       res.sendStatus(401)
       return
     }
+    console.log('/set_correct ' + JSON.stringify(json))
     //---------------------
     isCorrect = true;
     correct_ans = json.correct
@@ -74,13 +72,14 @@ app.post('/set_bad', (req, res) => {
     let json = {
       token: jsonRaw["token"],
       id: jsonRaw["id"],
-      correct: jsonRaw["correct"]
+      bad: jsonRaw["bad"]
     }
 
     if(json.token != TOKEN) {
       res.sendStatus(401)
       return
     }
+    console.log('/set_bad ' + JSON.stringify(json))
     //---------------------
     
     usedMachines.push(json.id)
